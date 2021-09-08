@@ -8,8 +8,16 @@ namespace NamedDependencyInjection
     {
         internal ServiceLifetime ServiceLifetime { get; set; }
 
-        internal void AddDependency(string key, Func<IServiceProvider, TService> value, ServiceLifetime lifetime)
+        internal void AddDependency(string key, Func<IServiceProvider, TService> factory, ServiceLifetime lifetime)
         {
+            if (string.IsNullOrEmpty(key)) {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            if (factory == null) {
+                throw new ArgumentNullException(nameof(factory));
+            }
+
             if (lifetime != this.ServiceLifetime)
             {
                 throw new InvalidOperationException($"Failed to register named dependency '{key}' of {typeof(TService).FullName} with different lifetimes: {lifetime} and {this.ServiceLifetime}.");
@@ -20,7 +28,7 @@ namespace NamedDependencyInjection
                 throw new InvalidOperationException($"Failed to register a duplicated named dependency '{key}' of {typeof(TService).FullName}.");
             }
 
-            this.Add(key, value);
+            this.Add(key, factory);
         }
     }
 }
