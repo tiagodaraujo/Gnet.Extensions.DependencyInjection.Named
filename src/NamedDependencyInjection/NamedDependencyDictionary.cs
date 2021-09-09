@@ -10,11 +10,13 @@ namespace NamedDependencyInjection
 
         internal void AddDependency(string key, Func<IServiceProvider, TService> factory, ServiceLifetime lifetime)
         {
-            if (string.IsNullOrEmpty(key)) {
+            if (string.IsNullOrEmpty(key))
+            {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            if (factory == null) {
+            if (factory == null)
+            {
                 throw new ArgumentNullException(nameof(factory));
             }
 

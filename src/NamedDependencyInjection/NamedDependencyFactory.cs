@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NamedDependencyInjection
 {
@@ -19,18 +20,29 @@ namespace NamedDependencyInjection
 
         public IEnumerable<TService> GetServices()
         {
+            var services = new List<TService>();
             foreach (var item in this.namedFactoryDictionary)
             {
-                yield return GetService(item.Key);
+                services.Add(GetService(item.Key));
             }
+
+            return services;
         }
 
         public IEnumerable<TService> GetRequiredServices()
         {
+            if (!this.namedFactoryDictionary.Any())
+            {
+                throw new InvalidOperationException($"No service for type '{typeof(TService)}' has been registered with name.");
+            }
+
+            var services = new List<TService>();
             foreach (var item in this.namedFactoryDictionary)
             {
-                yield return GetRequiredService(item.Key);
+                services.Add(GetRequiredService(item.Key));
             }
+
+            return services;
         }
 
         public TService GetService(string name)
@@ -40,12 +52,7 @@ namespace NamedDependencyInjection
                 throw new ArgumentNullException(nameof(name));
             }
 
-            if (container.TryGetValue(name, out var service))
-            {
-                return service;
-            }
-
-            return container.AddOrUpdate(name, ServiceFactory, (serviceName, oldService) => oldService);
+            return container.GetOrAdd(name, ServiceFactory);
         }
 
         public TService GetRequiredService(string name)
@@ -61,18 +68,12 @@ namespace NamedDependencyInjection
 
         private TService ServiceFactory(string name)
         {
-            if (!this.namedFactoryDictionary.ContainsKey(name))
+            if (this.namedFactoryDictionary.TryGetValue(name, out var factory) && factory != null)
             {
-                this.namedFactoryDictionary.TryGetValue(string.Empty, out var defaultFactory);
+                return factory.Invoke(this.serviceProvider);
+            };
 
-                return (defaultFactory ?? NullService).Invoke(this.serviceProvider);
-            }
-
-            this.namedFactoryDictionary.TryGetValue(name, out var factory);
-
-            return (factory ?? NullService).Invoke(this.serviceProvider);
+            return default;
         }
-
-        private static TService NullService(IServiceProvider sp) => default;
     }
 }

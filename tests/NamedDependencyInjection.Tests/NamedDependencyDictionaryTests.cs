@@ -1,10 +1,9 @@
 ﻿using System;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using NamedDependencyInjection;
 using Xunit;
 
-namespace NameDependencyInjection.Tests
+namespace NamedDependencyInjection.Tests
 {
     public class NamedDependencyDictionaryTests
     {
