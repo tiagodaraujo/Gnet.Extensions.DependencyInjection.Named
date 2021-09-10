@@ -121,6 +121,16 @@ namespace NamedDependencyInjection
             {
                 throw new ArgumentOutOfRangeException(nameof(namedFactories), "Should has one or more elements.");
             }
+
+            if (namedFactories.Any(x => string.IsNullOrEmpty(x.Key)))
+            {
+                throw new ArgumentOutOfRangeException(nameof(namedFactories), "Service name null or empty is not valid.");
+            }
+
+            if (namedFactories.Any(x => x.Value == null))
+            {
+                throw new ArgumentOutOfRangeException(nameof(namedFactories), "Service factory null is not valid.");
+            }
         }
     }
 }
