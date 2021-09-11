@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace NamedDependencyInjection.Tests
+namespace Gnet.Extensions.DependencyInjection.Named.Tests
 {
     public class ServiceCollectionExtensionsTests
     {
@@ -44,13 +44,13 @@ namespace NamedDependencyInjection.Tests
         [InlineData(true, " ", true, null)]
         [InlineData(true, "name", true, null)]
         [InlineData(true, "duplicated", true, typeof(InvalidOperationException))]
-        public void AddNamedScoped_NamedDependencyDictionary_Parameters_ExpectedTheExceptionOrNot(bool servicesIsValid, string name, bool factoryIsValid, Type exceptionType)
+        public void AddNamedScoped_NamedServiceDictionary_Parameters_ExpectedTheExceptionOrNot(bool servicesIsValid, string name, bool factoryIsValid, Type exceptionType)
         {
             // Arranje
             var (services, factory) = GetArguments(servicesIsValid, factoryIsValid, ServiceLifetime.Scoped);
 
             // Act
-            void act() => ServiceCollectionExtensions.AddNamedScoped(services, new NamedDependencyDictionary<object> { { name, factory } });
+            void act() => ServiceCollectionExtensions.AddNamedScoped(services, new NamedServiceDictionary<object> { { name, factory } });
 
             // Assert
             if (exceptionType == null)
@@ -98,13 +98,13 @@ namespace NamedDependencyInjection.Tests
         [InlineData(true, " ", true, null)]
         [InlineData(true, "name", true, null)]
         [InlineData(true, "duplicated", true, typeof(InvalidOperationException))]
-        public void AddNamedTransient_NamedDependencyDictionary_Parameters_ExpectedTheExceptionOrNot(bool servicesIsValid, string name, bool factoryIsValid, Type exceptionType)
+        public void AddNamedTransient_NamedServiceDictionary_Parameters_ExpectedTheExceptionOrNot(bool servicesIsValid, string name, bool factoryIsValid, Type exceptionType)
         {
             // Arranje
             var (services, factory) = GetArguments(servicesIsValid, factoryIsValid, ServiceLifetime.Transient);
 
             // Act
-            void act() => ServiceCollectionExtensions.AddNamedTransient(services, new NamedDependencyDictionary<object> { { name, factory } });
+            void act() => ServiceCollectionExtensions.AddNamedTransient(services, new NamedServiceDictionary<object> { { name, factory } });
 
             // Assert
             if (exceptionType == null)
@@ -152,13 +152,13 @@ namespace NamedDependencyInjection.Tests
         [InlineData(true, " ", true, null)]
         [InlineData(true, "name", true, null)]
         [InlineData(true, "duplicated", true, typeof(InvalidOperationException))]
-        public void AddNamedSingleton_NamedDependencyDictionary_Parameters_ExpectedTheExceptionOrNot(bool servicesIsValid, string name, bool factoryIsValid, Type exceptionType)
+        public void AddNamedSingleton_NamedServiceDictionary_Parameters_ExpectedTheExceptionOrNot(bool servicesIsValid, string name, bool factoryIsValid, Type exceptionType)
         {
             // Arranje
             var (services, factory) = GetArguments(servicesIsValid, factoryIsValid, ServiceLifetime.Singleton);
 
             // Act
-            void act() => ServiceCollectionExtensions.AddNamedSingleton(services, new NamedDependencyDictionary<object> { { name, factory } });
+            void act() => ServiceCollectionExtensions.AddNamedSingleton(services, new NamedServiceDictionary<object> { { name, factory } });
 
             // Assert
             if (exceptionType == null)
@@ -206,13 +206,13 @@ namespace NamedDependencyInjection.Tests
         [InlineData(true, " ", true, null)]
         [InlineData(true, "name", true, null)]
         [InlineData(true, "duplicated", true, typeof(InvalidOperationException))]
-        public void AddNamed_NamedDependencyDictionary_Parameters_ExpectedTheExceptionOrNot(bool servicesIsValid, string name, bool factoryIsValid, Type exceptionType)
+        public void AddNamed_NamedServiceDictionary_Parameters_ExpectedTheExceptionOrNot(bool servicesIsValid, string name, bool factoryIsValid, Type exceptionType)
         {
             // Arranje
             var (services, factory) = GetArguments(servicesIsValid, factoryIsValid, ServiceLifetime.Transient);
 
             // Act
-            void act() => ServiceCollectionExtensions.AddNamed(services, new NamedDependencyDictionary<object> { { name, factory } }, ServiceLifetime.Transient);
+            void act() => ServiceCollectionExtensions.AddNamed(services, new NamedServiceDictionary<object> { { name, factory } }, ServiceLifetime.Transient);
 
             // Assert
             if (exceptionType == null)
@@ -232,7 +232,7 @@ namespace NamedDependencyInjection.Tests
             var (services, factory) = GetArguments(true, true, ServiceLifetime.Transient);
 
             // Act
-            void act() => ServiceCollectionExtensions.AddNamed(services, new NamedDependencyDictionary<object> { { "name", factory } }, ServiceLifetime.Singleton);
+            void act() => ServiceCollectionExtensions.AddNamed(services, new NamedServiceDictionary<object> { { "name", factory } }, ServiceLifetime.Singleton);
 
             // Assert
             Assert.Throws<InvalidOperationException>(act);

@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Xunit;
 
-namespace NamedDependencyInjection.Tests
+namespace Gnet.Extensions.DependencyInjection.Named.Tests
 {
-    public class NamedDependencyFactoryTests
+    public class NamedServiceFactoryTests
     {
         private const string ServiceName = "serviceName";
         private const string ServiceName2 = "serviceName2";
@@ -14,7 +14,7 @@ namespace NamedDependencyInjection.Tests
         private static readonly Func<IServiceProvider, object> ServiceFactory = sp => Service;
 
         private Mock<IServiceProvider> providerMock;
-        private NamedDependencyDictionary<object> namedDependencyDictionary;
+        private NamedServiceDictionary<object> namedServiceDictionary;
 
         [Fact]
         public void Constructor_Dependencies_VerifyNoCalls()
@@ -24,7 +24,7 @@ namespace NamedDependencyInjection.Tests
 
             // Assert
             providerMock.VerifyNoOtherCalls();
-            this.namedDependencyDictionary.Should().BeEmpty();
+            this.namedServiceDictionary.Should().BeEmpty();
         }
 
         [Theory]
@@ -34,7 +34,7 @@ namespace NamedDependencyInjection.Tests
         {
             // Assert
             var target = Build();
-            AddNamedDependencyDictionary(serviceName: serviceName);
+            AddNamedServiceDictionary(serviceName: serviceName);
 
             // Act
             void act() => target.GetService(null);
@@ -48,7 +48,7 @@ namespace NamedDependencyInjection.Tests
         {
             // Assert
             var target = Build();
-            AddNamedDependencyDictionary(serviceName: ServiceName);
+            AddNamedServiceDictionary(serviceName: ServiceName);
 
             // Act
             var result = target.GetService(ServiceName);
@@ -62,7 +62,7 @@ namespace NamedDependencyInjection.Tests
         {
             // Assert
             var target = Build();
-            AddNamedDependencyDictionary(serviceName: null);
+            AddNamedServiceDictionary(serviceName: null);
 
             // Act
             var result = target.GetService(ServiceName);
@@ -76,8 +76,8 @@ namespace NamedDependencyInjection.Tests
         {
             // Assert
             var target = Build();
-            AddNamedDependencyDictionary(serviceName: ServiceName);
-            AddNamedDependencyDictionary(serviceName: ServiceName2);
+            AddNamedServiceDictionary(serviceName: ServiceName);
+            AddNamedServiceDictionary(serviceName: ServiceName2);
 
             // Act
             var result = target.GetServices();
@@ -95,7 +95,7 @@ namespace NamedDependencyInjection.Tests
         {
             // Assert
             var target = Build();
-            AddNamedDependencyDictionary(serviceName: null);
+            AddNamedServiceDictionary(serviceName: null);
 
             // Act
             var result = target.GetServices();
@@ -111,7 +111,7 @@ namespace NamedDependencyInjection.Tests
         {
             // Assert
             var target = Build();
-            AddNamedDependencyDictionary(serviceName: serviceName);
+            AddNamedServiceDictionary(serviceName: serviceName);
 
             // Act
             void act() => target.GetRequiredService(null);
@@ -125,7 +125,7 @@ namespace NamedDependencyInjection.Tests
         {
             // Assert
             var target = Build();
-            AddNamedDependencyDictionary(serviceName: ServiceName);
+            AddNamedServiceDictionary(serviceName: ServiceName);
 
             // Act
             var result = target.GetRequiredService(ServiceName);
@@ -139,7 +139,7 @@ namespace NamedDependencyInjection.Tests
         {
             // Assert
             var target = Build();
-            AddNamedDependencyDictionary(serviceName: null);
+            AddNamedServiceDictionary(serviceName: null);
 
             // Act
             void act() => target.GetRequiredService(ServiceName);
@@ -153,8 +153,8 @@ namespace NamedDependencyInjection.Tests
         {
             // Assert
             var target = Build();
-            AddNamedDependencyDictionary(serviceName: ServiceName);
-            AddNamedDependencyDictionary(serviceName: ServiceName2);
+            AddNamedServiceDictionary(serviceName: ServiceName);
+            AddNamedServiceDictionary(serviceName: ServiceName2);
 
             // Act
             var result = target.GetRequiredServices();
@@ -172,7 +172,7 @@ namespace NamedDependencyInjection.Tests
         {
             // Assert
             var target = Build();
-            AddNamedDependencyDictionary(serviceName: null);
+            AddNamedServiceDictionary(serviceName: null);
 
             // Act
             void act() => target.GetRequiredServices();
@@ -181,23 +181,23 @@ namespace NamedDependencyInjection.Tests
             Assert.Throws<InvalidOperationException>(act);
         }
 
-        private void AddNamedDependencyDictionary(string serviceName)
+        private void AddNamedServiceDictionary(string serviceName)
         {
             if (serviceName != null)
             {
-                this.namedDependencyDictionary.AddDependency(serviceName, ServiceFactory, ServiceLifetime.Transient);
+                this.namedServiceDictionary.AddDependency(serviceName, ServiceFactory, ServiceLifetime.Transient);
             }
         }
 
-        private NamedDependencyFactory<object> Build()
+        private NamedServiceFactory<object> Build()
         {
             this.providerMock = new Mock<IServiceProvider>();
-            this.namedDependencyDictionary = new NamedDependencyDictionary<object>
+            this.namedServiceDictionary = new NamedServiceDictionary<object>
             {
                 ServiceLifetime = ServiceLifetime.Transient
             };
 
-            var target = new NamedDependencyFactory<object>(providerMock.Object, this.namedDependencyDictionary);
+            var target = new NamedServiceFactory<object>(providerMock.Object, this.namedServiceDictionary);
 
             return target;
         }

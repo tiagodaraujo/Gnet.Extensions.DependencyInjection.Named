@@ -1,13 +1,13 @@
 .PHONY: build test pack
 
 build:
-	dotnet build NamedDependencyInjection.sln
+	dotnet build DependencyInjection.Named.sln
 
 test:
-	dotnet test NamedDependencyInjection.sln
+	dotnet test DependencyInjection.Named.sln
 
 coverage:
-	dotnet test NamedDependencyInjection.sln --collect:"XPlat Code Coverage"
+	dotnet test DependencyInjection.Named.sln --collect:"XPlat Code Coverage"
 
 pack:
-	dotnet pack src/NamedDependencyInjection/NamedDependencyInjection.csproj -c Release --include-source --include-symbols -o nupkgs
+	dotnet pack src/DependencyInjection.Named/DependencyInjection.Named.csproj -c Release --include-source --include-symbols -o nupkgs

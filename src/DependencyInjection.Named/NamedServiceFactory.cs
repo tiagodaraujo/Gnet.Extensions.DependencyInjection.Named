@@ -3,15 +3,15 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NamedDependencyInjection
+namespace Gnet.Extensions.DependencyInjection.Named
 {
-    internal class NamedDependencyFactory<TService>
+    internal class NamedServiceFactory<TService>
     {
-        private readonly NamedDependencyDictionary<TService> namedFactoryDictionary;
+        private readonly NamedServiceDictionary<TService> namedFactoryDictionary;
         private readonly IServiceProvider serviceProvider;
         private readonly ConcurrentDictionary<string, TService> container;
 
-        public NamedDependencyFactory(IServiceProvider serviceProvider, NamedDependencyDictionary<TService> namedFactoryDictionary)
+        public NamedServiceFactory(IServiceProvider serviceProvider, NamedServiceDictionary<TService> namedFactoryDictionary)
         {
             this.namedFactoryDictionary = namedFactoryDictionary;
             this.serviceProvider = serviceProvider;

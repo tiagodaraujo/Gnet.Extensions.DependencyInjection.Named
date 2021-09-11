@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace NamedDependencyInjection
+namespace Gnet.Extensions.DependencyInjection.Named
 {
     public static class ServiceCollectionExtensions
     {
@@ -10,10 +10,10 @@ namespace NamedDependencyInjection
         {
             ValidArguments(services, name, factory);
 
-            return services.AddNamedScoped(new NamedDependencyDictionary<TService> { { name, factory } });
+            return services.AddNamedScoped(new NamedServiceDictionary<TService> { { name, factory } });
         }
 
-        public static IServiceCollection AddNamedScoped<TService>(this IServiceCollection services, NamedDependencyDictionary<TService> namedFactories)
+        public static IServiceCollection AddNamedScoped<TService>(this IServiceCollection services, NamedServiceDictionary<TService> namedFactories)
         {
             ValidArguments(services, namedFactories);
 
@@ -24,10 +24,10 @@ namespace NamedDependencyInjection
         {
             ValidArguments(services, name, factory);
 
-            return services.AddNamedTransient(new NamedDependencyDictionary<TService> { { name, factory } });
+            return services.AddNamedTransient(new NamedServiceDictionary<TService> { { name, factory } });
         }
 
-        public static IServiceCollection AddNamedTransient<TService>(this IServiceCollection services, NamedDependencyDictionary<TService> namedFactories)
+        public static IServiceCollection AddNamedTransient<TService>(this IServiceCollection services, NamedServiceDictionary<TService> namedFactories)
         {
             ValidArguments(services, namedFactories);
 
@@ -38,10 +38,10 @@ namespace NamedDependencyInjection
         {
             ValidArguments(services, name, factory);
 
-            return services.AddNamedSingleton(new NamedDependencyDictionary<TService> { { name, factory } });
+            return services.AddNamedSingleton(new NamedServiceDictionary<TService> { { name, factory } });
         }
 
-        public static IServiceCollection AddNamedSingleton<TService>(this IServiceCollection services, NamedDependencyDictionary<TService> namedFactories)
+        public static IServiceCollection AddNamedSingleton<TService>(this IServiceCollection services, NamedServiceDictionary<TService> namedFactories)
         {
             ValidArguments(services, namedFactories);
 
@@ -52,17 +52,17 @@ namespace NamedDependencyInjection
         {
             ValidArguments(services, name, factory);
 
-            return services.AddNamed(new NamedDependencyDictionary<TService> { { name, factory } }, lifetime);
+            return services.AddNamed(new NamedServiceDictionary<TService> { { name, factory } }, lifetime);
         }
 
-        public static IServiceCollection AddNamed<TService>(this IServiceCollection services, NamedDependencyDictionary<TService> namedFactories, ServiceLifetime lifetime)
+        public static IServiceCollection AddNamed<TService>(this IServiceCollection services, NamedServiceDictionary<TService> namedFactories, ServiceLifetime lifetime)
         {
             ValidArguments(services, namedFactories);
 
-            var descriptor = services.FirstOrDefault(d => d.ServiceType == typeof(NamedDependencyDictionary<TService>));
+            var descriptor = services.FirstOrDefault(d => d.ServiceType == typeof(NamedServiceDictionary<TService>));
             if (descriptor != null)
             {
-                var namedDictionary = descriptor.ImplementationInstance as NamedDependencyDictionary<TService>;
+                var namedDictionary = descriptor.ImplementationInstance as NamedServiceDictionary<TService>;
                 foreach (var item in namedFactories)
                 {
                     if (string.IsNullOrEmpty(item.Key))
@@ -77,11 +77,11 @@ namespace NamedDependencyInjection
             }
 
             namedFactories.ServiceLifetime = lifetime;
-            services.AddSingleton<NamedDependencyDictionary<TService>>(namedFactories);
+            services.AddSingleton<NamedServiceDictionary<TService>>(namedFactories);
             services.Add(
                 new ServiceDescriptor(
-                    typeof(NamedDependencyFactory<TService>),
-                    sp => new NamedDependencyFactory<TService>(sp, sp.GetRequiredService<NamedDependencyDictionary<TService>>()),
+                    typeof(NamedServiceFactory<TService>),
+                    sp => new NamedServiceFactory<TService>(sp, sp.GetRequiredService<NamedServiceDictionary<TService>>()),
                     lifetime));
 
             return services;
@@ -105,7 +105,7 @@ namespace NamedDependencyInjection
             }
         }
 
-        private static void ValidArguments<TService>(IServiceCollection services, NamedDependencyDictionary<TService> namedFactories)
+        private static void ValidArguments<TService>(IServiceCollection services, NamedServiceDictionary<TService> namedFactories)
         {
             if (services == null)
             {

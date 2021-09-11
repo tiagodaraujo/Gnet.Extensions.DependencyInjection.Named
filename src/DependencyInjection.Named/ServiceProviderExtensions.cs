@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace NamedDependencyInjection
+namespace Gnet.Extensions.DependencyInjection.Named
 {
     public static class ServiceProviderExtensions
     {
         public static TService GetNamedService<TService>(this IServiceProvider provider, string name)
         {
             ValidArguments(provider, name);
-            var namedFactory = provider.GetService<NamedDependencyFactory<TService>>();
+            var namedFactory = provider.GetService<NamedServiceFactory<TService>>();
 
             return namedFactory != null ? namedFactory.GetService(name) : default;
         }
@@ -17,13 +17,13 @@ namespace NamedDependencyInjection
         public static TService GetNamedRequiredService<TService>(this IServiceProvider provider, string name)
         {
             ValidArguments(provider, name);
-            return provider.GetRequiredService<NamedDependencyFactory<TService>>().GetRequiredService(name);
+            return provider.GetRequiredService<NamedServiceFactory<TService>>().GetRequiredService(name);
         }
 
         public static IEnumerable<TService> GetNamedServices<TService>(this IServiceProvider provider)
         {
             ValidArguments(provider);
-            var service = provider.GetService<NamedDependencyFactory<TService>>();
+            var service = provider.GetService<NamedServiceFactory<TService>>();
 
             return service != null ? service.GetServices() : default;
         }
@@ -32,7 +32,7 @@ namespace NamedDependencyInjection
         {
             ValidArguments(provider);
 
-            return provider.GetRequiredService<NamedDependencyFactory<TService>>().GetRequiredServices();
+            return provider.GetRequiredService<NamedServiceFactory<TService>>().GetRequiredServices();
         }
 
         private static void ValidArguments(IServiceProvider provider)

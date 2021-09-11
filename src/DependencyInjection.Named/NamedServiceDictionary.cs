@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace NamedDependencyInjection
+namespace Gnet.Extensions.DependencyInjection.Named
 {
-    public sealed class NamedDependencyDictionary<TService> : Dictionary<string, Func<IServiceProvider, TService>>
+    public sealed class NamedServiceDictionary<TService> : Dictionary<string, Func<IServiceProvider, TService>>
     {
         internal ServiceLifetime ServiceLifetime { get; set; }
 

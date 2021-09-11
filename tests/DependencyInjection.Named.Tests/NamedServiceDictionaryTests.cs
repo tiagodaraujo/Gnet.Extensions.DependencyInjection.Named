@@ -3,9 +3,9 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace NamedDependencyInjection.Tests
+namespace Gnet.Extensions.DependencyInjection.Named.Tests
 {
-    public class NamedDependencyDictionaryTests
+    public class NamedServiceDictionaryTests
     {
         [Theory]
         [InlineData(null, false, ServiceLifetime.Transient, typeof(ArgumentNullException))]
@@ -20,7 +20,7 @@ namespace NamedDependencyInjection.Tests
             var target = Build();
 
             // Act
-            Action act = () => target.AddDependency(key, factory, lifetime);
+            void act() => target.AddDependency(key, factory, lifetime);
 
             // Assert
             Assert.Throws(exceptionType, act);
@@ -43,15 +43,15 @@ namespace NamedDependencyInjection.Tests
         public void Contructor_ShouldBeEmpty()
         {
             // Act
-            var target = new NamedDependencyDictionary<object>();
+            var target = new NamedServiceDictionary<object>();
 
             // Assert
             target.Should().BeEmpty();
         }
 
-        private NamedDependencyDictionary<object> Build()
+        private NamedServiceDictionary<object> Build()
         {
-            var target = new NamedDependencyDictionary<object>
+            var target = new NamedServiceDictionary<object>
             {
                 ServiceLifetime = ServiceLifetime.Transient
             };

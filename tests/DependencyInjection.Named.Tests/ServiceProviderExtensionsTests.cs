@@ -3,7 +3,7 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace NamedDependencyInjection.Tests
+namespace Gnet.Extensions.DependencyInjection.Named.Tests
 {
     public class ServiceProviderExtensionsTests
     {

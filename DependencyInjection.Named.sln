@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NamedDependencyInjection", "src\NamedDependencyInjection\NamedDependencyInjection.csproj", "{49A55764-C70F-4FCA-8E55-9B1A3E6085D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjection.Named", "src\DependencyInjection.Named\DependencyInjection.Named.csproj", "{49A55764-C70F-4FCA-8E55-9B1A3E6085D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamedDependencyInjection.Tests", "tests\NamedDependencyInjection.Tests\NamedDependencyInjection.Tests.csproj", "{16BC967D-B9C0-4F92-BCF9-75F0F0CBA6A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyInjection.Named.Tests", "tests\DependencyInjection.Named.Tests\DependencyInjection.Named.Tests.csproj", "{16BC967D-B9C0-4F92-BCF9-75F0F0CBA6A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
