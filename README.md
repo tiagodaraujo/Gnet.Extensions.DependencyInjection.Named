@@ -1,6 +1,6 @@
 # Gnet.Extensions.DependencyInjection.Named
 
-<img src="logos/Gnet-banner.jpg" width="40%" height="40%">
+<img src="logos/Gnet-banner.png" width="40%" height="40%">
 
 > Named Dependency Injection Extensions for .NET Core.
 
