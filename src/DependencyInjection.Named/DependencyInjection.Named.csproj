@@ -1,24 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+	<PropertyGroup>
 		<TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
-    <AssemblyName>Gnet.Extensions.DependencyInjection.Named</AssemblyName>
-    <RootNamespace>Gnet.Extensions.DependencyInjection.Named</RootNamespace>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<AssemblyName>Gnet.Extensions.DependencyInjection.Named</AssemblyName>
+		<RootNamespace>Gnet.Extensions.DependencyInjection.Named</RootNamespace>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<LangVersion>12.0</LangVersion>
-  </PropertyGroup>
+	</PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' ">
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />
-  </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' ">
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />
+	</ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
-  </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
+	</ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
-  </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
+	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
@@ -32,24 +32,28 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 	</ItemGroup>
 
-  <PropertyGroup>
-    <!-- NuGet packaging -->
-    <IsPackable>True</IsPackable>
-    <PackageId>NamedDependencyInjection</PackageId>
-    <Title>Gnet DependencyInjection: Named Dependency Injection Extensions for .NET Core</Title>
-    <Authors>Tiago Araújo</Authors>
-    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <PackageProjectUrl>https://github.com/tiagodaraujo/Gnet.Extensions.DependencyInjection.Named</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/tiagodaraujo/Gnet.Extensions.DependencyInjection.Named</RepositoryUrl>
-    <PackageTags>aspnetcore netcode dependencyinjection dependency injection serviceprovider servicecolletion</PackageTags>
-    <IncludeSymbols>false</IncludeSymbols>
+	<PropertyGroup>
+		<!-- NuGet packaging -->
+		<IsPackable>True</IsPackable>
+		<PackageId>NamedDependencyInjection</PackageId>
+		<Title>Gnet DependencyInjection: Named Dependency Injection Extensions for .NET Core</Title>
+		<Authors>Tiago Araújo</Authors>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+		<PackageProjectUrl>https://github.com/tiagodaraujo/Gnet.Extensions.DependencyInjection.Named</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/tiagodaraujo/Gnet.Extensions.DependencyInjection.Named</RepositoryUrl>
+		<PackageTags>aspnetcore netcode dependencyinjection dependency injection serviceprovider servicecolletion</PackageTags>
+		<IncludeSymbols>false</IncludeSymbols>
 		<Version>2.0.1</Version>
-  </PropertyGroup>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>DependencyInjection.Named.Tests</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\LICENSE" Pack="true" PackagePath="\"/>
+		<None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>DependencyInjection.Named.Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
 
 </Project>
